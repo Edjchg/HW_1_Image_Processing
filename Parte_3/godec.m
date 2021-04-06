@@ -9,7 +9,7 @@ function[L, S, error] = godec(A, k, c_0, epsilon)
     t = t + 1;
     [U, E, V] = svd(A - S_t);
     L_t = U(:,1:k)*E(1:k,1:k)*V(:,1:k)';
-    S_t = P_c0(A - L_t, c_0);
+    S_t = P_c02(A - L_t, c_0);
     if abs(obtener_error(A, L_t, S_t) - E_t) < epsilon
     %if contador == 0
       break
