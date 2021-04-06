@@ -1,4 +1,4 @@
-Tarea 1 Del Curso Procesamietno y Analisis de Imagenes Digital
+Tarea 1 Del Curso Procesamietno y Analisis de Imagenes Digitales
 
 Estudiantes:
             Christian Alpizar
