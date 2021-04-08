@@ -1,5 +1,12 @@
 %Empotrado y extraccion de marcas de agua en imagenes
 %Utiliza la transformada discreta de coseno y descomposicion SVD
+%Entradas:
+%   imagen1.jpg: imagen original
+%   marca.jpg: marca de agua a incrustar
+%Salida:
+%   imagen_watermark.jpg: imagen con la marca de agua incrustada
+%   marca_extraida.jpg: maraca de agua extraida de la imagen anterior
+
 clc; clear; close all; %limpiesa inicial
 pkg load image %cargado de paquete de imagenes
 pkg load signal %cargado de paquete de senales

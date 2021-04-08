@@ -22,48 +22,48 @@ function W_d=watermark_extract(I_d,U1,V1,S,M,N,alpha)
   
   %Aplicacion de la transformada discreta de coseno en bloques de MxN
   %Transformada de dos dimensiones usando la funcion de Octave dct2
-  for block_line=0:(m/M)-1
-    for block_col=0:(n/N)-1
-      lpos=block_line*M;
-      cpos=block_col*N;
-      F_d(lpos+1:lpos+M,cpos+1:cpos+N)=dct2(I_d(lpos+1:lpos+M,cpos+1:cpos+N));
-    endfor
-  endfor
+  % for block_line=0:(m/M)-1
+  %   for block_col=0:(n/N)-1
+  %     lpos=block_line*M;
+  %     cpos=block_col*N;
+  %     F_d(lpos+1:lpos+M,cpos+1:cpos+N)=dct2(I_d(lpos+1:lpos+M,cpos+1:cpos+N));
+  %   endfor
+  % endfor
 
   %Transformada manual (tiene un rendimiento peor que la funcion de octave)
   %definicion de variables para la ubicacion de los bloques
-  % M_offset=0;
-  % N_offset=0;
-  % for block_line=1:(m/M)
-  %   for block_col=1:(n/N)
-  %     for p=1:M
-  %       for q=1:N
-  %         Cu=0;Cv=0;
-  %         if p==1
-  %           Cu=sqrt(1/M);
-  %         else
-  %           Cu=sqrt(2/M);
-  %         endif
-  %         if q==1
-  %           Cv=sqrt(1/N);
-  %         else
-  %           Cv=sqrt(2/N);
-  %         endif
-  %         for i=1:M
-  %           for j=1:N
-  %             cos_u=cos(pi*(2*(i-1)+1)*(p-1)/(2*M));
-  %             cos_v=cos(pi*(2*(j-1)+1)*(q-1)/(2*N));
-  %             I_mnd=I_d(i+M_offset,j+N_offset);
-  %             F_d(p+M_offset,q+N_offset)+=Cu*Cv*I_mnd*cos_u*cos_v;
-  %           endfor
-  %         endfor
-  %       endfor
-  %     endfor
-  %     N_offset+=8;
-  %   endfor
-  %   M_offset+=8;
-  %   N_offset=0;
-  % endfor
+  M_offset=0;
+  N_offset=0;
+  for block_line=1:(m/M)
+    for block_col=1:(n/N)
+      for p=1:M
+        for q=1:N
+          Cu=0;Cv=0;
+          if p==1
+            Cu=sqrt(1/M);
+          else
+            Cu=sqrt(2/M);
+          endif
+          if q==1
+            Cv=sqrt(1/N);
+          else
+            Cv=sqrt(2/N);
+          endif
+          for i=1:M
+            for j=1:N
+              cos_u=cos(pi*(2*(i-1)+1)*(p-1)/(2*M));
+              cos_v=cos(pi*(2*(j-1)+1)*(q-1)/(2*N));
+              I_mnd=I_d(i+M_offset,j+N_offset);
+              F_d(p+M_offset,q+N_offset)+=Cu*Cv*I_mnd*cos_u*cos_v;
+            endfor
+          endfor
+        endfor
+      endfor
+      N_offset+=N;
+    endfor
+    M_offset+=M;
+    N_offset=0;
+  endfor
 
   %Obtencion de la matriz A_d por medio de los primeros valores (valores DC) 
   % de F_d en bloques de MxN. F_d(1,1)(1<=m<=64,1<=n<=64)
