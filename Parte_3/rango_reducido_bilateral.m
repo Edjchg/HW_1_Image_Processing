@@ -3,7 +3,7 @@ function L_t =rango_reducido_bilateral(A, r, p)
   n=size(A,2); %Numero de columnas de A, si se quieren filas se pone 1.
   Y2=randn(n,r);
   %Paso 2
-  for k=1:p
+  for k=1:p+1
     Y1=A*Y2;
     Y2=A'*Y1;
   endfor
