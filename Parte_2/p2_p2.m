@@ -32,53 +32,53 @@ A3=zeros([m/M n/N]); %creacion de la matrix A3 (valores DC de F3)
 
 %Aplicacion de la transformada discreta de coseno en bloques de MxN
 %Transformada de dos dimensiones usando la funcion de Octave dct2
-% for block_line=0:(m/M)-1
-%   for block_col=0:(n/N)-1
-%       lpos=block_line*M;
-%       cpos=block_col*N;
-%       %Aplicacion de las transformaciones en paralelo
-%       F2(lpos+1:lpos+M,cpos+1:cpos+N)=dct2(I2(lpos+1:lpos+M,cpos+1:cpos+N));
-%       F3(lpos+1:lpos+M,cpos+1:cpos+N)=dct2(I3(lpos+1:lpos+M,cpos+1:cpos+N));
-%   endfor
-% endfor
+for block_line=0:(m/M)-1
+  for block_col=0:(n/N)-1
+      lpos=block_line*M;
+      cpos=block_col*N;
+      %Aplicacion de las transformaciones en paralelo
+      F2(lpos+1:lpos+M,cpos+1:cpos+N)=dct2(I2(lpos+1:lpos+M,cpos+1:cpos+N));
+      F3(lpos+1:lpos+M,cpos+1:cpos+N)=dct2(I3(lpos+1:lpos+M,cpos+1:cpos+N));
+  endfor
+endfor
 
 %Transformada manual (tiene un rendimiento peor que la funcion de octave)
 %definicion de variables para la ubicacion de los bloques
-M_offset=0;
-N_offset=0;
-for block_line=1:(m/M)
-for block_col=1:(n/N)
-    for p=1:M
-    for q=1:N
-        Cu=0;Cv=0;
-        if p==1
-        Cu=sqrt(1/M);
-        else
-        Cu=sqrt(2/M);
-        endif
-        if q==1
-        Cv=sqrt(1/N);
-        else
-        Cv=sqrt(2/N);
-        endif
-        for i=1:M
-        for j=1:N
-            %Aplicacion de las transformaciones en paralelo
-            cos_u=cos(pi*(2*(i-1)+1)*(p-1)/(2*M));
-            cos_v=cos(pi*(2*(j-1)+1)*(q-1)/(2*N));
-            I_mn2=I2(i+M_offset,j+N_offset);
-            I_mn3=I3(i+M_offset,j+N_offset);
-            F2(p+M_offset,q+N_offset)+=Cu*Cv*I_mn2*cos_u*cos_v;
-            F3(p+M_offset,q+N_offset)+=Cu*Cv*I_mn3*cos_u*cos_v;
-        endfor
-        endfor
-    endfor
-    endfor
-    N_offset+=M;
-endfor
-M_offset+=M;
-N_offset=0;
-endfor
+% M_offset=0;
+% N_offset=0;
+% for block_line=1:(m/M)
+% for block_col=1:(n/N)
+%     for p=1:M
+%     for q=1:N
+%         Cu=0;Cv=0;
+%         if p==1
+%         Cu=sqrt(1/M);
+%         else
+%         Cu=sqrt(2/M);
+%         endif
+%         if q==1
+%         Cv=sqrt(1/N);
+%         else
+%         Cv=sqrt(2/N);
+%         endif
+%         for i=1:M
+%         for j=1:N
+%             %Aplicacion de las transformaciones en paralelo
+%             cos_u=cos(pi*(2*(i-1)+1)*(p-1)/(2*M));
+%             cos_v=cos(pi*(2*(j-1)+1)*(q-1)/(2*N));
+%             I_mn2=I2(i+M_offset,j+N_offset);
+%             I_mn3=I3(i+M_offset,j+N_offset);
+%             F2(p+M_offset,q+N_offset)+=Cu*Cv*I_mn2*cos_u*cos_v;
+%             F3(p+M_offset,q+N_offset)+=Cu*Cv*I_mn3*cos_u*cos_v;
+%         endfor
+%         endfor
+%     endfor
+%     endfor
+%     N_offset+=M;
+% endfor
+% M_offset+=M;
+% N_offset=0;
+% endfor
 
 %Obtencion de la matriz A2 y A3 por medio de los primeros valores (valores DC) 
 % de F2 y F3 en bloques de MxN. F(1,1)(1<=m<=64,1<=n<=64)
