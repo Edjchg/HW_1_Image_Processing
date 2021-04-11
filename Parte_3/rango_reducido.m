@@ -1,5 +1,5 @@
 function AR = rango_reducido(A, r)
-  [U,S,V]=svd(A);
+  [U,S,V]=svd(A, 'econ');
   %Rango reducido
   U_r=U(:,1:r);
   V_r=V(:,1:r);

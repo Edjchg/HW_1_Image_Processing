@@ -1,6 +1,7 @@
+%
+
 function[L, S, error] = godec(A, k, c_0, epsilon)
   t = 0;
-  
   [m,n] = size(A);
   if m<n
     L_t = A';
@@ -11,7 +12,6 @@ function[L, S, error] = godec(A, k, c_0, epsilon)
   S_t = zeros(size(A));
   E_t = 0;
   contador = 0;
-  %while (1)
   while(1)
     t = t + 1;
     L_t = rango_reducido(A-S_t, k);
